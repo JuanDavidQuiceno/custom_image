@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum ImageType { file, network }
+enum ImageType { file, network, asset }
 
 class CustomImage extends StatelessWidget {
   final void Function()? onTap;
@@ -14,7 +14,7 @@ class CustomImage extends StatelessWidget {
   final double? height;
   final double? width;
   final Color? color;
-  final double? borderRadius;
+  final BorderRadius? borderRadius;
   final ImageType? type;
   final FilterQuality? filterQuality;
   final String? pathNoImage;
@@ -37,7 +37,7 @@ class CustomImage extends StatelessWidget {
   Widget build(BuildContext context) => GestureDetector(
         onTap: onTap,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(borderRadius ?? 0),
+          borderRadius: borderRadius ?? BorderRadius.zero,
           child: SizedBox(
             height: height,
             width: width,

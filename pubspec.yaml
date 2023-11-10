@@ -1,6 +1,6 @@
 name: custom_image
-description: Este paquete se adaptan a las necesidades generales de diversos proyectos, proporcionando una solución visual efectiva y rápida.
-version: 0.0.1
+description: This package adapts to the general needs of various projects, providing an effective and fast visual solution.
+version: 0.0.2
 repository: https://github.com/JuanDavidQuiceno/custom_image
 
 environment:
