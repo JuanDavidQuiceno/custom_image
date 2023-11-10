@@ -15,7 +15,7 @@ and the Flutter guide for
 
 ## Getting Started
 
-This package This package is used to make [flutter_svg](https://pub.dev/packages/flutter_svg).
+This package is used to make [flutter_svg](https://pub.dev/packages/flutter_svg).
 
 Supports platform compilation for:
 

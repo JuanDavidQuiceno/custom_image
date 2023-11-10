@@ -1,4 +1,5 @@
 import 'package:custom_image/custom_image.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,9 +24,14 @@ class MyApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 CustomImage(
+                  /// Set the path or URL for the image, accepting [String] types with extensions such as
+                  /// [jpg], [jpeg], [png], [gif], [webp], [svg]
                   'https://pbs.twimg.com/media/FnM8-jFWYAIN2X7.jpg',
 
-                  /// set type image [ImageType.file], [ImageType.network], [ImageType.asset]
+                  /// set type image
+                  /// [ImageType.file],
+                  /// [ImageType.network],
+                  /// [ImageType.asset]
                   type: ImageType.network,
 
                   /// if you want to use onTap, you can use it like this
