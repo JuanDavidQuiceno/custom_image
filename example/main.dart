@@ -72,10 +72,10 @@ class MyApp extends StatelessWidget {
                   /// [BoxFit.fitWidth],
                   fit: BoxFit.cover,
 
-                  /// set pathNoImage default asign image
+                  /// set pathNoImage for a local image
                   pathNoImage: 'assets/no_image.png',
 
-                  /// set pathLoading for image local
+                  /// set pathLoading for a local image
                   pathLoading: 'assets/loading.gif',
                 ),
               ],
