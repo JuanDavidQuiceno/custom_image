@@ -28,20 +28,26 @@ Supports platform compilation for:
 
 ## Properties :
 
-| Property      | Type              | Description                                                                        |
-| ------------- | ----------------- | ---------------------------------------------------------------------------------- |
-| image         | **String**        | (required) image path or ulr.                                                      |
-| key           | **Key**           | (Optional) Widget key                                                              |
-| onTap         | **Function**      | (Optional) Function to execute when the widget is pressed.                         |
-| fit           | **BoxFit**        | (Optional) How to inscribe the image into the space allocated during layout.       |
-| height        | **double**        | (Optional) The image height.                                                       |
-| width         | **double**        | (Optional) The image width.                                                        |
-| color         | **Color**         | (Optional) A color to blend with the image.                                        |
-| borderRadius  | **BorderRadius**  | (Optional) The image border radius.                                                |
-| type          | **ImageType**     | (Optional) The image type [ImageType.file], [ImageType.network], [ImageType.asset] |
-| filterQuality | **FilterQuality** | (Optional) The image filter quality.                                               |
-| pathNoImage   | **String**        | (Optional) The image path when the image is not found.                             |
-| pathLoading   | **String**        | (Optional) The image path when the image is loading.                               |
+| Property      | Type                | Description                                                                        |
+| ------------- | ------------------- | ---------------------------------------------------------------------------------- |
+| image         | **String**          | (required) image path or ulr.                                                      |
+| key           | **Key**             | (Optional) Widget key                                                              |
+| onTap         | **Function**        | (Optional) Function to execute when the widget is pressed.                         |
+| fit           | **BoxFit**          | (Optional) How to inscribe the image into the space allocated during layout.       |
+| height        | **double**          | (Optional) The image height.                                                       |
+| width         | **double**          | (Optional) The image width.                                                        |
+| color         | **Color**           | (Optional) A color to blend with the image.                                        |
+| borderRadius  | **BorderRadius**    | (Optional) The image border radius.                                                |
+| elevation     | **bool**            | (Optional) The image elevation activate the boxShadow.                             |
+| shadowColor   | **List<BoxShadow>** | (Optional) if elevation is true, the shadow default color is black.                |
+| type          | **ImageType**       | (Optional) The image type [ImageType.file], [ImageType.network], [ImageType.asset] |
+| svgTheme      | **SvgTheme**        | (Optional) The svg theme.                                                          |
+| filterQuality | **FilterQuality**   | (Optional) The image filter quality.                                               |
+| pathNoImage   | **String**          | (Optional) The image path when the image is not found.                             |
+| pathLoading   | **String**          | (Optional) The image path when the image is loading.                               |
+| childNoImage  | **Widget**          | (Optional) The widget to be displayed if the main image fails to load.             |
+| childLoading  | **Widget**          | (Optional) The widget to be displayed while the main image is loading.             |
+| sizeIconError | **double**          | (Optional) The size of the error icon.                                             |
 
 ## Contribution
 

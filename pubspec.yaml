@@ -1,6 +1,7 @@
+publish_to: "https://pub.dev"
 name: custom_image
 description: This package adapts to the general needs of various projects, providing an effective and fast visual solution.
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/JuanDavidQuiceno/custom_image
 
 environment:
@@ -23,8 +24,8 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   # To add assets to your package, add an assets section, like this:
-  assets:
-    - assets/
+  # assets:
+  # - assets/
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

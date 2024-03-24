@@ -1,3 +1,11 @@
+## 0.0.4
+
+- Updated loading animation
+- Updated error loading image
+- customized loading and error loading image
+- Updated documentation
+- Updated example
+
 ## 0.0.3
 
 - Updated documentation

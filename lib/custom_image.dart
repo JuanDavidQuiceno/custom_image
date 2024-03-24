@@ -1,3 +1,5 @@
+/// This library contains the [CustomImage] widget, which is used to display images
+/// from various sources including the internet, assets, or files.
 library custom_image;
 
 import 'dart:io';
@@ -5,93 +7,132 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// enum for image type
-///
-/// If no type is defined, the default is [ImageType.network].
-enum ImageType { file, network, asset }
+/// Enum to specify the type of image source.
+enum ImageType {
+  /// Image is loaded from a file.
+  file,
 
-/// Class for custom image
-///
-/// [CustomImage] is a widget that can be used to display images from the internet, assets, or files.
+  /// Image is loaded from a network URL.
+  network,
+
+  /// Image is loaded from an asset.
+  asset
+}
+
+/// A customizable widget for displaying images from various sources.
 class CustomImage extends StatelessWidget {
-  /// set onTap for image
+  /// Callback function for when the image is tapped.
   final void Function()? onTap;
 
-  /// path or URL for the image, accepting [String]
+  /// Path or URL for the image.
   final String image;
 
-  /// set fit for image
+  /// Theme settings for SVG images.
+  final SvgTheme? svgTheme;
+
+  /// How the image should be inscribed into the space allocated during layout.
   final BoxFit? fit;
 
-  /// set height and width for image
+  /// The height of the image.
   final double? height;
 
-  /// set height and width for image
+  /// The width of the image.
   final double? width;
 
-  /// set color for image if you want
+  /// The color to apply to the image.
   final Color? color;
 
-  /// set borderRadius
+  /// Whether to display an elevation effect.
+  final bool? elevation;
+
+  /// List<BoxShadow>? boxShadow
+  final List<BoxShadow>? boxShadow;
+
+  /// The border radius of the image.
   final BorderRadius? borderRadius;
 
-  /// set type image
+  /// The type of the image source.
   final ImageType? type;
 
-  /// set filterQuality for image
+  /// The quality of the image filter.
   final FilterQuality? filterQuality;
 
-  /// set pathNoImage default asign image
+  /// The path to the image to be displayed if the main image fails to load.
   final String? pathNoImage;
 
-  /// set pathLoading for image local
+  /// The widget to be displayed if the main image fails to load.
+  final Widget? childNoImage;
+
+  /// The path to the image to be displayed while the main image is loading.
   final String? pathLoading;
+
+  /// The widget to be displayed while the main image is loading.
+  final Widget? childLoading;
+
+  /// The size of the error icon.
+  final double? sizeIconError;
+
+  /// Creates a [CustomImage] widget.
   const CustomImage(
     this.image, {
     Key? key,
-    this.fit,
+    this.svgTheme,
+    this.fit = BoxFit.cover,
     this.height,
     this.width,
     this.color,
-    this.borderRadius,
+    this.borderRadius = BorderRadius.zero,
     this.type,
-    this.filterQuality,
+    this.filterQuality = FilterQuality.medium,
     this.pathNoImage,
     this.onTap,
     this.pathLoading,
+    this.childNoImage,
+    this.sizeIconError,
+    this.childLoading,
+    this.elevation = false,
+    this.boxShadow = const [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 10,
+        spreadRadius: 5,
+        offset: Offset(0, 5),
+      ),
+    ],
   }) : super(key: key);
+
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        /// if you want to use onTap, you can use it like this
+  Widget build(BuildContext context) => InkWell(
+        borderRadius: borderRadius,
         onTap: onTap,
-
-        /// If you want to apply borders to the corners of the image
-        child: ClipRRect(
-          borderRadius: borderRadius ?? BorderRadius.zero,
-          child: SizedBox(
-            height: height,
-            width: width,
-
-            /// check type image
-            child: type == ImageType.file
-                ? _imageFile()
-                : image.startsWith('assets/')
-                    ? _imageAsset()
-                    : _imageNetwork(),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            boxShadow: elevation! ? boxShadow : null,
+          ),
+          child: ClipRRect(
+            borderRadius: borderRadius!,
+            child: SizedBox(
+              height: height,
+              width: width,
+              child: type == ImageType.file || image.startsWith('/')
+                  ? _imageFile()
+                  : type == ImageType.asset || image.startsWith('asset')
+                      ? _imageAsset()
+                      : _imageNetwork(),
+            ),
           ),
         ),
       );
 
-  /// Method for image asset
-  ///
-  /// check if the image is an asset is .svg or other image types
+  /// Returns the widget for displaying an image loaded from an asset.
   Widget _imageAsset() {
     return image.endsWith('.svg')
         ? SvgPicture.asset(
             image,
             height: height,
             width: width,
-            fit: fit ?? BoxFit.cover,
+            fit: fit!,
             placeholderBuilder: (BuildContext context) => _loading(),
           )
         : Image.asset(
@@ -99,98 +140,128 @@ class CustomImage extends StatelessWidget {
             color: color,
             height: height,
             width: width,
-            filterQuality: filterQuality ?? FilterQuality.medium,
-            fit: fit ?? BoxFit.cover,
+            filterQuality: filterQuality!,
+            fit: fit,
             errorBuilder: (context, error, stackTrace) {
               return _noImage();
             },
           );
   }
 
-  /// Method for image network
-
+  /// Returns the widget for displaying an image loaded from a network URL.
   Widget _imageNetwork() {
     try {
-      /// check if the image ends with .svg or other image types
-      /// if the image ends with .svg, it will be displayed using [SvgPicture.network]
       if (image.endsWith('.svg')) {
         return SvgPicture.network(
           image,
           height: height,
           width: width,
-          fit: fit ?? BoxFit.cover,
+          fit: fit!,
           placeholderBuilder: (BuildContext context) => _loading(),
+          theme: svgTheme,
         );
       }
 
-      /// if the image does not end with .svg, it will be displayed using [Image.network]
       return Image.network(
         image,
         height: height,
         width: width,
-        filterQuality: filterQuality ?? FilterQuality.medium,
-        fit: fit ?? BoxFit.cover,
+        filterQuality: filterQuality!,
+        fit: fit,
         color: color,
         errorBuilder: (context, error, stackTrace) {
-          /// if the image fails to load, it will be displayed using [Image.asset]
           return _noImage();
         },
-
-        /// if the image is loading, it will be displayed using [Image.asset]
         loadingBuilder: (BuildContext context, Widget child,
             ImageChunkEvent? loadingProgress) {
           if (loadingProgress == null) {
-            return child;
+            return AnimatedOpacity(
+              opacity: 1,
+              duration: const Duration(seconds: 3),
+              curve: Curves.easeOut,
+              child: child,
+            );
           }
-          return _loading();
+
+          return _loading(
+            value: loadingProgress.expectedTotalBytes != null
+                ? loadingProgress.cumulativeBytesLoaded /
+                    loadingProgress.expectedTotalBytes!
+                : null,
+          );
         },
       );
     } catch (e) {
-      /// if the image fails to load, it will be displayed using [Image.asset]
       return _noImage();
     }
   }
 
-  /// Method for image loading
-  ///
-  /// if the image is loading, it will be displayed using [Image.asset]
-  /// if the image fails to load, it will be displayed using [CircularProgressIndicator]
-  Widget _loading() {
+  /// Returns the widget for displaying a loading indicator.
+  Widget _loading({double? value}) {
     try {
-      return Image.asset(
-        pathLoading ?? 'assets/jar-loading.gif',
-        height: height,
-        width: width,
-        fit: fit ?? BoxFit.cover,
-      );
+      if (childLoading != null) {
+        return childLoading!;
+      } else if (pathLoading != null) {
+        return Image.asset(
+          pathLoading!,
+          height: height,
+          width: width,
+          fit: fit,
+        );
+      } else {
+        return Center(
+          child: CircularProgressIndicator(
+            value: value,
+          ),
+        );
+      }
     } catch (e) {
-      return const CircularProgressIndicator();
+      return Center(
+        child: CircularProgressIndicator(
+          value: value,
+        ),
+      );
     }
   }
 
-  /// Method for image no image
-  ///
-  /// if the image is loading, it will be displayed using [Image.asset]
-
+  /// Returns the widget for displaying a placeholder when the main image fails to load.
   Widget _noImage() {
     try {
-      return Image.asset(
-        pathNoImage ?? 'assets/no-image.png',
-        fit: fit ?? BoxFit.cover,
-      );
+      if (childNoImage != null) {
+        return childNoImage!;
+      } else if (pathNoImage != null) {
+        return Image.asset(
+          pathNoImage!,
+          fit: fit,
+          height: height,
+          width: width,
+          errorBuilder: (context, error, stackTrace) {
+            return _iconError();
+          },
+          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+            if (wasSynchronouslyLoaded) {
+              return child;
+            } else {
+              return AnimatedOpacity(
+                opacity: frame == null ? 0 : 1,
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeOut,
+                child: child,
+              );
+            }
+          },
+        );
+      } else {
+        return _iconError();
+      }
     } catch (e) {
-      /// TODO: verify if this is the best way to return a Container
-      return Container(
-        color: Colors.white,
-      );
+      return _iconError();
     }
   }
 
-  /// Method for image file
-  ///
-  /// if path is file, it will be displayed using [Image.file]
-  /// if the image fails to load, it will be displayed using [Image.asset]
+  Widget _iconError() => Icon(Icons.error, size: sizeIconError);
 
+  /// Returns the widget for displaying an image loaded from a file.
   Widget _imageFile() {
     return Image.file(
       File(image),
