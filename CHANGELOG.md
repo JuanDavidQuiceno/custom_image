@@ -1,3 +1,7 @@
+## 0.0.5
+
+- Fix No Material widget found
+
 ## 0.0.4
 
 - Updated loading animation
