@@ -103,7 +103,6 @@ class CustomImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-        // borderRadius: borderRadius,
         onTap: onTap,
         child: DecoratedBox(
           decoration: BoxDecoration(
