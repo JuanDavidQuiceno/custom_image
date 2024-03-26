@@ -1,6 +1,6 @@
 name: custom_image
 description: This package adapts to the general needs of various projects, providing an effective and fast visual solution.
-version: 0.0.4
+version: 0.0.5
 repository: https://github.com/JuanDavidQuiceno/custom_image
 
 environment:
