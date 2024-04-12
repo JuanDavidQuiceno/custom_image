@@ -39,6 +39,9 @@ class CustomImage extends StatelessWidget {
   /// The width of the image.
   final double? width;
 
+  /// background color
+  final Color? backgroundColor;
+
   /// The color to apply to the image.
   final Color? color;
 
@@ -80,6 +83,7 @@ class CustomImage extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.height,
     this.width,
+    this.backgroundColor,
     this.color,
     this.borderRadius = BorderRadius.zero,
     this.type,
@@ -106,6 +110,7 @@ class CustomImage extends StatelessWidget {
         onTap: onTap,
         child: DecoratedBox(
           decoration: BoxDecoration(
+            color: backgroundColor,
             borderRadius: borderRadius,
             boxShadow: elevation! ? boxShadow : null,
           ),
@@ -118,7 +123,9 @@ class CustomImage extends StatelessWidget {
                   ? _imageFile()
                   : type == ImageType.asset || image.startsWith('asset')
                       ? _imageAsset()
-                      : _imageNetwork(),
+                      : type == ImageType.network || image.startsWith('http')
+                          ? _imageNetwork()
+                          : _noImage(),
             ),
           ),
         ),

@@ -1,3 +1,8 @@
+## 0.0.6
+
+- Add background color to the image
+- Add validation of urls that start with http
+
 ## 0.0.5
 
 - Fix No Material widget found
